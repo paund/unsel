@@ -1,0 +1,134 @@
+﻿@charset "utf-8";
+
+
+	body{
+		font-family 'Hiragino Kaku Gothic Pro','Osaka',"メイリオ",'ＭＳ Ｐゴシック','MS PGothic','Verdana','Arial','sans-serif';
+		margin-left:10%;
+		margin-right:10%;
+	}
+
+	img{
+		outline:none;
+		border-style:none;
+	}
+
+
+
+/*  INPUT  */
+
+
+	input[type="text"]{
+ 		padding: 0.5em;
+    		outline: none;
+    		border: 2px solid #99CCCC;
+    		/*-webkit-border-radius: 5px;
+    		-moz-border-radius: 5px;*/
+    		border-radius: 5px;
+    		font-size: 16px;
+	}
+
+/*  BOTTUN  */
+
+
+	.normal_btn {
+		display: inline-block;
+		padding: 0.5em 1em;
+		text-decoration: none;
+		font-weight: bold;
+		color: #99CCCC;
+    		background: #F8F8FF;
+		border: solid 8px #99CCCC;	
+		border-radius: 3px;
+		transition: .4s;
+	}
+
+	.normal_btn:hover {
+    		background: #CCFFCC;
+	}
+
+
+
+/*  HEADER  */
+
+
+	h1{
+		text-shadow: 1px 1px 3px #999999;
+		display: inline-block;
+		padding: 0.5em 1em;
+		height: 60px;
+    		line-height: 60px;
+    		background: #9BF9CC;
+		color:#FFFFFF;
+
+	}
+
+	h2{
+		display: inline-block;
+		padding: 0.5em 1em;
+		border-bottom: double 8px #9BF9CC;
+	}
+
+	h3{
+		display: inline-block;
+		padding: 0.5em 1em;
+		border-bottom: solid 3px #9BF9CC;
+
+	}
+
+
+/*  DIV  */
+
+
+	div.alert {
+		display: inline-block;
+		padding: 0.5em 1em;		
+		display: block;
+		text-decoration: none;
+		background-color: #FFFAF0;
+		border: solid 4px #FFA07A;	
+		border-radius: 3px;
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+	}
+
+	div.message {
+		display: inline-block;
+		padding: 0.5em 1em;
+		display: block;
+		text-decoration: none;
+		background-color: #FFFFF0;
+		border: solid 4px #FFCC66;	
+		border-radius: 3px;
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+	}
+
+	div.result {
+		display: inline-block;
+		padding: 0.5em 1em;
+		display: block;
+		text-decoration: none;
+		background-color: #F5FFFA;
+		border: solid 4px #33FFCC;	
+		border-radius: 3px;
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+	}
+
+
+/*  SPAN  */
+
+	span.alert{
+		color:#FFA07A;
+		font-weight:bolder;
+
+	}
+
+	span.message{
+		color:#FFCC66;
+		font-weight:bolder;
+
+	}
+
+	span.result{
+		color:#00FF7F;
+		font-weight:bolder;
+		
+	}
