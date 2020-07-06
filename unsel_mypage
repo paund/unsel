@@ -1,0 +1,133 @@
+<?php
+session_start();
+
+//【セッション管理】
+    	//セッション情報なければログイン画面へ
+	if (empty($_SESSION['userid']) OR empty($_SESSION['username'])) {
+echo "nosessuin";
+	//	header("ログインページURL");
+
+	}else{
+
+		$userid = $_SESSION['userid'];
+		$username = $_SESSION['username'];
+
+	}
+
+
+	//DB接続	
+	$dsn = 'mysql:dbname=MYSQL名';
+	$user = 'ユーザー名';
+	$password = 'パスワード';
+	$pdo = new PDO($dsn,$user,$password);
+
+?>
+
+
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" type="text/css" href="design.css">
+	
+	<title>マイページ|あんせる</title>
+</head>
+
+
+<body>
+
+<h1><?php echo $username."さん"; ?> マイページ</h1>
+
+	<div class=result>
+	<span class=result>これまでの記録</span>
+
+
+<?php
+//【診断結果の記録】
+
+	//お気に入りテーブル作成
+
+	$sql="CREATE TABLE favorite_info"
+		."("
+			."userid INT(8) ,"
+			."pagename char(15),"
+			."pageurl char(100),"
+			."diagnosis char(100),"
+			."memo char(200),"
+			."testdate DATETIME"
+		.")"
+		."DEFAULT CHARSET=utf8;";
+	
+	$favorite_info = $pdo->query($sql);
+
+
+	//ユーザーの診断結果を表示
+	$sql = $pdo -> prepare ("SELECT * FROM favorite_info WHERE userid='$userid'");
+	$favo_tb = $sql -> execute();
+	
+	if($favo_tb = $sql->fetch(PDO::FETCH_ASSOC)){
+
+
+
+		foreach($favo_tb as $show_row){
+	
+			print "<pre>";
+			print_r ($show_row);
+			print "<pre>";
+echo "リピート";
+		}
+
+	}
+
+
+
+
+
+
+/*　●診断ページ＊コピペ用●
+
+	//DB接続	
+	$dsn = 'mysql:dbname=MYSQL名';
+	$user = 'ユーザー名';
+	$password = 'パスワード';
+	$pdo = new PDO($dsn,$user,$password);
+
+//【お気に入り登録】
+
+	//変数にデータ格納
+	$userId =
+	$pageName = 
+	$pageURL =
+	$diaGnosis = 
+	$memo
+	$testDate =
+
+	//DBに保存
+	if(){
+
+		$sql = $pdo -> prepare("INSERT INTO preuser_info (userid,pagename,pageurl,diagnosis,memo,testdate) VALUES (:userid,:pagename,:pageurl,:diagnosis,:memo,:testdate)");
+		$sql -> bindParam(':userid', $userId, PDO::PARAM_STR);
+		$sql -> bindParam(':pagename', $pageName, PDO::PARAM_STR);
+		$sql -> bindParam(':pageurl', $pageURL, PDO::PARAM_STR);
+		$sql -> bindParam(':diagnosis', $diaGnosis, PDO::PARAM_STR);
+		$sql -> bindParam(':memo', $memo, PDO::PARAM_STR);
+		$sql -> bindParam(':testdate', $testDate, PDO::PARAM_STR);
+		$sql -> execute();
+
+	}
+
+*/		
+
+
+
+//【その他診断へ
+
+
+
+?>
+
+	</div>
+
+	<a href="診断ページURL"."?userid=<?php echo $userId ?>"><img src="写真.jpg" width="100" height="100" alt="診断コンテンツへ"></a>
+
