@@ -1,0 +1,276 @@
+<?php
+
+	//DB接続	
+	$dsn = 'mysql:dbname=MYSQL名';
+	$user = 'MYSQLユーザー名';
+	$password = 'MYSQLパスワード';
+	$pdo = new PDO($dsn,$user,$password);
+
+
+//【セッションにログイン情報を保存】
+
+	// セッション管理開始
+	session_start();
+
+
+    	//セッション情報なければログイン画面へ
+	if (empty($_SESSION['userid']) OR empty($_SESSION['username'])) {
+
+		header("location:ログインページURL");
+
+	}else{
+
+		$userid = $_SESSION['userid'];
+		$username = $_SESSION['username'];
+
+	}
+?>
+
+
+
+<html>
+
+<head>
+	<meta content = "text/html; charset=utf-8">
+
+	<link rel="stylesheet" type="text/css" href="design.css">
+	
+	<title>内向性・外向性診断｜あんせる</title>
+
+<!-- ★診断コンテンツ★ -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+			//var result_numin = $('document.inout.inout_check.in input:checkbox:checked').length;
+			//var result_numou = $('document.inout.inout_check.out input:checkbox:checked').length;
+
+	$(function(){ 
+		var message = $('#message');
+		var comment = $('#comment');
+		message.text('あなたの診断結果は……');
+
+		//ボタンをクリックしたら
+		$('#submit').click(function(){
+
+			var result_in = 0;
+			var result_out = 0;
+
+			//チェックボックスの数を数える
+			for(i=0; i<8; i++){
+
+				if(document.inout_check.in[i].checked){ result_in++;
+				}
+
+				if(document.inout_check.out[i].checked){ result_out++;
+				}
+			}
+
+			//チェックボックス数から診断
+			var result_inout = result_in - result_out;
+
+
+			if(result_numin == 0 && result_numou == 0) {
+				mess ="診断してみよう";
+				com = "当てはまる項目にチェックをして「診断」をクリック";
+
+			} else if(result_inout < 0) {
+				mess ="外向性が高い";
+				com = "意識が他人に向きやすい人";
+				<?php $inout_result = "外向性が高い"; ?>
+
+			} else if(result_inout > 0) {
+				mess ="内向性が高い";
+				com = "意識が自分に向きやすい人";
+				<?php $inout_result = "内向性が高い"; ?>
+
+			} else if(result_inout == 0) {
+				mess ="両向性";
+				com = "外向性・内向性のバランスがとれている人";
+				<?php $inout_result = "両向性"; ?>
+
+			} else {
+				mess ="診断してみよう";
+				com = "当てはまる項目にチェックをして「診断」をクリック";
+			}
+
+			message.text('あなたは'+ mess + 'です');
+			comment.text(com);
+		});
+ 
+		$('#reset').click(function(){
+			message.text('診断をやりなおします');
+			comment.text('当てはまる項目にチェックをして「診断」をクリック');
+		});
+	});
+
+	</script>
+
+<!-- ★診断コンテンツおわり★ -->
+
+
+</head>
+
+<body>
+
+
+
+	<h1>内向性・外向性診断</h1><br>
+
+	<p>あなたは「内向的」だね。<br>
+	あなたは「外向的」だね。</p>
+
+	<p>そんなこと、誰かにいわれたことありませんか？</p>
+
+	<p>でも、そもそも「内向的」「外向的」って、何でしょう。</p>
+
+	<p>あなたには、はっきりとした答えが出せますか？</p>
+
+	<h2>心理学の内向性・外向性</h2><br>
+	
+	<p>さっそく診断……の前に、少し心理学を学んでみましょう。</p>
+
+	<p>内向性と外向性は様々な要素で構成されているため、一概には判断できません。</p>
+
+	<p>精神科医・ユングの定義を用いると、<br>
+
+	外向的な人とは：心のエネルギーが自分の外に向かう人のこと。周囲の物事や人々に関心をもっていて、その分周りからの影響が強い傾向があります。<br>
+	内向的な人とは：心のエネルギーが自分の内に向かう人のこと。自分の内に強く関心を抱く傾向にあります。</p>
+
+	<p>現代の心理学では、内向性と外向性の両方の性質を人間はもっている、とされています。<br>
+	つまり、誰もが内向的な人間であると同時に外向的な人間である、ということです。</p>
+
+	<p>ただ、両方の性質がある、といっても、人によって偏りはあります。<br>
+	内向性が髙い人、外向性が髙い人がそれぞれいます。
+	また、両向性の人もいて、そういう人は、内向性と外向性のバランスがとれている人、といえるでしょう。</p>
+
+
+	<h2>診断</h2><br>
+	
+	<p>では、お待ちかねの診断の時間です。<br>
+	あくまで、これは簡易的な診断であることに留意してくださいね。</p>
+
+	<p>あなたには、下のチェック表にある16の質問に答えていただきます。<br>
+	心当たりがある項目には全てチェックをつけましょう。<br>
+	全ての項目に目を通したら、「診断」をクリックしてください。<br>
+	診断結果が表示されます。</p>
+
+
+
+	<h3>チェック表</h3>
+
+	<form name="inout_check" action="unsel_inout-check.php" method="post">
+
+		<input type="checkbox" name="in" value="1" id="1"><label for="1">その場の感情には流されないほうだ</label><br>
+		<input type="checkbox" name="in" value="1" id="2"><label for="2">言葉には責任がともなうから発言には気をつけている</label><br>
+		<input type="checkbox" name="out" value="1" id="3"><label for="3">人と話している時、冗談をいったりおどけてみせたりする</label><br>
+		<input type="checkbox" name="in" value="1" id="4"><label for="4">自分に関係することは大切だ</label><br>
+		<input type="checkbox" name="out" value="1" id="5"><label for="5">友達は多いほうだ</label><br>
+		<input type="checkbox" name="out" value="1" id="6"><label for="6">悔しいことも寝れば忘れてしまう</label><br>
+		<input type="checkbox" name="out" value="1" id="7"><label for="7">みんなに認められたい</label><br>
+		<input type="checkbox" name="in" value="1" id="8"><label for="8">自分のたてた目標はちゃんと達成したい</label><br>
+		<input type="checkbox" name="in" value="1" id="9"><label for="9">感情よりも知性を優先するほうだ</label><br>
+		<input type="checkbox" name="out" value="1" id="10"><label for="10">仕事（学業）に対して飽きっぽい</label><br>
+		<input type="checkbox" name="in" value="1" id="11"><label for="11">一度やると決めたらやりぬく</label><br>
+		<input type="checkbox" name="out" value="1" id="12"><label for="12">怒りっぽいほうだ</label><br>
+		<input type="checkbox" name="in" value="1" id="13"><label for="13">きちんと確認してから物事を進めたい</label><br>
+		<input type="checkbox" name="out" value="1" id="14"><label for="14">日記は長続きしない</label><br>
+		<input type="checkbox" name="out" value="1" id="15"><label for="15">せっかちなほうだ</label><br>
+		<input type="checkbox" name="in" value="1" id="16"><label for="16">実行できないことは約束しない</label><br>
+
+		<button  class="normal_btn" id="submit" value="">診断</button>
+		<input  class="normal_btn" type="reset" id="reset" value="リセット">
+
+	</form>
+		<div class="result" id="comment">
+			<span class="result" id="message">
+			</span><br>
+		</div>
+
+
+
+
+<?php	
+
+	/*【診断】
+
+	$numin = $_POST['in'];
+	$numou = $_POST['out'];
+	$userId = $_POST['userid'];
+
+
+	$result_numin = count($numin);
+	$result_numou = count($numou);
+	
+	$result_inout = $result_numin - $result_numou;
+
+		if($result_numin == 0 && $result_numou == 0) {
+			$result_mess ="項目をチェックしてから診断してみよう";
+
+		} else if($result_inout < 0) {
+			$result_mess ="外向性が高い";
+
+		} else if($result_inout > 0) {
+			$result_mess ="内向性が高い";
+
+		} else if($result_inout == 0) {
+			$result_mess ="両向性";
+
+		} else {
+			$result_mess ="診断してみよう";
+		}
+	echo $result_mess;
+*/
+?>
+
+	<form action = "unsel_inout-check.php" method = "post">
+
+	
+		<p>一口メモ（200字以内）<br>	
+			<input type="text" placeholder="診断結果についてメモしてみよう" name="favo_memo" size="50">
+		</p>
+
+		<input type="hidden" name="" value="<?php echo $result_mess; ?>">
+
+		<button  class="normal_btn" type="submit" value="">マイページにこの結果を登録する</button>
+
+	</form>
+
+	<p><a href="マイページURL"."?userid=<?php echo $userId ?>"><img src="img/grow.jpg" width="150" height="150" alt="マイページへ移動"></a>
+	</p>
+
+
+<?php
+
+	
+	//【お気に入り登録】
+
+	//変数にデータ格納
+	$pageName = "内向性・外向性診断";
+	$pageURL = 'お気に入りページURL';
+	$diaGnosis = $inout_result;
+	$testDate =  date("Y/m/d H:i:s");
+	$favoMemo = $_POST['favo_memo'];
+
+	//DBに保存
+	if(!empty($favorite)){
+
+		$sql = $pdo -> prepare("INSERT INTO favorite_info (userid,pagename,pageurl,diagnosis,memo,testdate) VALUES (:userid,:pagename,:pageurl,:diagnosis,:memo,:testdate)");
+		$sql -> bindParam(':userid', $userid, PDO::PARAM_STR);
+		$sql -> bindParam(':pagename', $pageName, PDO::PARAM_STR);
+		$sql -> bindParam(':pageurl', $pageURL, PDO::PARAM_STR);
+		$sql -> bindParam(':diagnosis', $diaGnosis, PDO::PARAM_STR);
+		$sql -> bindParam(':memo', $favoMemo, PDO::PARAM_STR);
+		$sql -> bindParam(':testdate', $testDate, PDO::PARAM_STR);
+		$sql -> execute();
+
+		echo "結果を保存しました";
+
+	}elseif(empty($userId)){
+
+		echo "お気に入り登録にはログインが必要です";
+	}
+
+?>
+
+
+</body>
