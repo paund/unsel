@@ -7,9 +7,9 @@ session_start();
 
 
 	//DB接続	
-	$dsn = 'mysql:dbname=tt_469_99sv_coco_com;host=localhost;charset=utf8mb4';
-	$user = 'tt-469.99sv-coco';
-	$password = 'Gi9KzBdy';
+	$dsn = 'mysql:dbname=MY SQL';
+	$user = 'ユーザー名';
+	$password = 'パスワード';
 	$pdo = new PDO($dsn,$user,$password);
 
 
@@ -17,7 +17,7 @@ session_start();
 	//ログイン済みならマイページへ
 	if(isset($_SESSION["username"])){
 
-	     header("location:http://tt-469.99sv-coco.com/unsel_mypage.php");
+	     header("location:マイページURL");
 
 
 	//ログイン機能
@@ -40,7 +40,7 @@ session_start();
  				$_SESSION["userid"] = $login_id;
  				$_SESSION["username"] = $login_name;
 
-				header("location:http://tt-469.99sv-coco.com/unsel_mypage.php"."?userid=".$login_id);
+				header("location:マイページURL"."?userid=".$login_id);
 
 			}else{
 				$errors['login'] = "ログインに失敗しました";
@@ -78,7 +78,7 @@ session_start();
 	<input type="text" placeholder="パスワード" name="login_pass" size="10"></p>
 
 	<button type="submit" value="">ログイン</button>
-	<input type="button" onClick="location.href='http://tt-469.99sv-coco.com/unsel_register.php'" value="会員登録はこちら">
+	<input type="button" onClick="location.href='会員登録ページURL'" value="会員登録はこちら">
 
 </form>
 
